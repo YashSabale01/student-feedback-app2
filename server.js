@@ -75,10 +75,10 @@ const validateForm = (data) => {
   if (!data.phone?.trim()) errors.phone = 'Contact Number is required';
   else if (!/^\d{10}$/.test(data.phone.trim())) errors.phone = 'Contact Number must be exactly 10 digits';
   if (!data.rollNo?.trim()) errors.rollNo = 'Roll Number is required';
-  if (!data.branch) errors.branch = 'Branch is required';
-  if (!data.useful) errors.useful = 'Please select if the course was useful';
-  if (!data.rating) errors.rating = 'Rating is required';
-  else if (!/^[1-5]$/.test(data.rating)) errors.rating = 'Rating must be between 1 and 5';
+  if (!data.branch?.trim()) errors.branch = 'Branch is required';
+  if (!data.useful?.trim()) errors.useful = 'Please select if the course was useful';
+  if (!data.rating?.toString().trim()) errors.rating = 'Rating is required';
+  else if (!/^[1-5]$/.test(data.rating.toString())) errors.rating = 'Rating must be between 1 and 5';
   return errors;
 };
 
@@ -106,6 +106,7 @@ app.post('/submit', async (req, res) => {
   
   if (Object.keys(errors).length > 0) {
     console.log('❌ Validation errors:', errors);
+    console.log('❌ Received data:', req.body);
     return res.status(400).json({ success: false, errors, data: req.body });
   }
 
