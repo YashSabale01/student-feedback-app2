@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
 
-// MongoDB connection with fallback
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/student_feedback';
+// MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:password123321@clustercampusarena.jlehwpg.mongodb.net/student_feedback';
 let isMongoConnected = false;
 
 mongoose.connect(MONGODB_URI)
@@ -71,19 +71,14 @@ app.post('/submit', async (req, res) => {
   if (Object.keys(errors).length > 0) {
     res.json({ success: false, errors, data: req.body });
   } else {
-    if (!isMongoConnected) {
-      console.log('Form data (MongoDB not connected):', req.body);
-      res.json({ success: true, message: 'Feedback received! (Database connection pending)' });
-      return;
-    }
-    
     try {
       const feedback = new Feedback(req.body);
       await feedback.save();
+      console.log('Feedback saved:', req.body);
       res.json({ success: true, message: 'Feedback submitted successfully!' });
     } catch (error) {
       console.error('Database save error:', error);
-      res.json({ success: true, message: 'Feedback received! (Saved to logs)' });
+      res.json({ success: false, errors: { general: 'Database error occurred' } });
     }
   }
 });

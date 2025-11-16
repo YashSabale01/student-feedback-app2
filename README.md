@@ -1,6 +1,12 @@
 # Student Feedback Form
 
-ExpressJS web application with server-side validation and MongoDB integration.
+ExpressJS web application with server-side validation and MongoDB Atlas integration.
+
+## Features
+- ✅ Server-side form validation
+- ✅ MongoDB Atlas database storage
+- ✅ Clean responsive UI
+- ✅ Error handling and display
 
 ## Local Development
 
@@ -9,41 +15,41 @@ ExpressJS web application with server-side validation and MongoDB integration.
 npm install
 ```
 
-2. Start MongoDB locally
-
-3. Run the application:
+2. Run the application:
 ```bash
 npm start
 ```
 
-4. Open http://localhost:3001
+3. Open http://localhost:3001
+
+## Database
+- **MongoDB Atlas Cluster:** clustercampusarena
+- **Database:** student_feedback
+- **Collection:** feedbacks
 
 ## Deployment
 
 ### Environment Variables
-- `MONGODB_URI`: MongoDB connection string
+- `MONGODB_URI`: mongodb+srv://admin:password123321@clustercampusarena.jlehwpg.mongodb.net/student_feedback
 - `PORT`: Server port (default: 3001)
 
-### Deploy to Heroku
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-heroku create your-app-name
-heroku config:set MONGODB_URI=your-mongodb-atlas-uri
-git push heroku main
-```
+### Deploy to Render
+1. Connect GitHub repository
+2. Set environment variable: `MONGODB_URI`
+3. Deploy automatically
 
-### Deploy to Vercel
-```bash
-npm install -g vercel
-vercel
-```
+## Form Validation Rules
+- **Full Name**: Required, alphabets + spaces only
+- **Email**: Valid email format required
+- **Phone**: Exactly 10 digits
+- **Roll Number**: Required
+- **Branch**: Required selection
+- **Course Usefulness**: Required radio selection
+- **Rating**: Required, 1-5 scale
+- **Suggestions**: Optional
 
-### Deploy to Railway
-```bash
-npm install -g @railway/cli
-railway login
-railway init
-railway up
+## View Data
+Use MongoDB Compass with connection string:
+```
+mongodb+srv://admin:password123321@clustercampusarena.jlehwpg.mongodb.net/
 ```
