@@ -20,7 +20,7 @@ npm install
 npm start
 ```
 
-3. Open http://localhost:3001
+3. Open http://localhost:3003
 
 ## Database
 - **MongoDB Atlas Cluster:** clustercampusarena
@@ -31,7 +31,7 @@ npm start
 
 ### Environment Variables
 - `MONGODB_URI`: mongodb+srv://admin:password123321@clustercampusarena.jlehwpg.mongodb.net/student_feedback
-- `PORT`: Server port (default: 3001)
+- `PORT`: Server port (default: 3003)
 
 ### Deploy to Render
 1. Connect GitHub repository

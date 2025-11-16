@@ -104,7 +104,7 @@
             };
             
             try {
-                const response = await fetch('/submit', {
+                const response = await fetch('http://localhost:3003/submit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -112,23 +112,35 @@
                     body: JSON.stringify(formData)
                 });
                 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const result = await response.json();
+                console.log('Server response:', result);
                 
                 if (result.success) {
                     document.getElementById('success-message').textContent = result.message;
                     document.getElementById('success-message').style.display = 'block';
                     document.getElementById('feedbackForm').reset();
+                    window.scrollTo(0, 0);
                 } else {
-                    Object.keys(result.errors).forEach(field => {
-                        const errorElement = document.getElementById(field + '-error');
-                        if (errorElement) {
-                            errorElement.textContent = result.errors[field];
-                        }
-                    });
+                    if (result.errors) {
+                        Object.keys(result.errors).forEach(field => {
+                            const errorElement = document.getElementById(field + '-error');
+                            if (errorElement) {
+                                errorElement.textContent = result.errors[field];
+                            } else if (field === 'general') {
+                                alert(result.errors[field]);
+                            }
+                        });
+                    } else {
+                        alert('Submission failed. Please check your input and try again.');
+                    }
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Submission failed. Please try again.');
+                console.error('Submission error:', error);
+                alert(`Submission failed: ${error.message}. Please check if the server is running.`);
             }
         });
     </script>
